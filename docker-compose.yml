@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  indrajeet_container_b:
+    build: cont-b
+    container_name: container_b
+    hostname: container_b
+    image: container_b
+    ports:
+      - 8080:80
+    restart: unless-stopped
+
+
+  indrajeet_container_c:
+    build: cont-c
+    container_name: container_c
+    hostname: container_c
+    image: container_c
+    ports:
+     - 8081:80
+    restart: unless-stopped
+
+
+
+  indrajeet_container_a:
+      build: cont-a
+      container_name: container_a
+      hostname: container_a
+      image: container_a
+      ports:
+        - 80:80
+      restart: unless-stopped
+      depends_on:
+        - indrajeet_container_b
+        - indrajeet_container_c
