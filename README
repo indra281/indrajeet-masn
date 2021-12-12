@@ -1,0 +1,85 @@
+Testing Domain
+a. http://domainb.geekyops.com/   
+b. http://domainc.geekyops.com/   
+
+There are Three Containers folder 
+1. cont-a 
+2. cont-b        
+3. cont-c       
+In Each Docker Folder respective Dockerfile and reqired dependent files are there for the tasks to run.
+
+Docker Compose file have used to bring up the env 
+
+also Apache virtual host contains location blok to limit the acces from IPS, so i have allowed the connection from three IP'
+
+sample 
+
+<Location />
+     Order deny,allow
+     Deny from all
+     Allow from 103.206.8.102  13.67.117.251  104.215.190.74 103.127.30.92  add new allowed IP's here
+</Location>
+
+##### Allowed IP's  ####
+indrajeet for testing at my end            ---  103.206.8.102  
+amanbir.southeastasia.cloudapp.azure.com   ---  13.67.117.251
+nitinmnsn.southeastasia.cloudapp.azure.com ---  104.215.190.74
+
+
+### script.sh Sample usage  ###
+
+- Set up env
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# bash script.sh "SETUP"
+    Building indrajeet_container_b
+    Sending build context to Docker daemon  3.072kB
+    Step 1/6 : FROM    centos:7
+    ---> eeb6ee3f44bd
+    Step 2/6 : RUN yum update -y && yum install httpd httpd-tools -y
+    ---> Using cache...............................................
+    ...............................................................
+
+- Get Docker container Status
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# bash script.sh "STATUS"
+    ContainerA : running
+    ContainerB : running
+    ContainerC : running
+
+- Get PID
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# bash script.sh "PID"
+    ContainerA : 17384,
+    ContainerB : 17151,
+    ContainerC : 17199,
+
+- Stop Container
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# bash script.sh "STOP"
+    4aef9ea64576
+    511702e47fe0
+    97556f5a4401
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# docker ps -a
+    CONTAINER ID   IMAGE         COMMAND                  CREATED         STATUS                      PORTS     NAMES
+    4aef9ea64576   container_a   "/usr/sbin/httpd -D …"   3 minutes ago   Exited (0) 22 seconds ago             container_a
+    511702e47fe0   container_b   "/usr/sbin/httpd -D …"   3 minutes ago   Exited (0) 22 seconds ago             container_b
+    97556f5a4401   container_c   "/usr/sbin/httpd -D …"   3 minutes ago   Exited (0) 22 seconds ago             container_c
+
+- Destroy Containers
+
+    root@monsoon-credit-tech:/home/indrajeet-masn# bash script.sh "DESTROY"
+    Deleted Containers:
+    4aef9ea64576747f6c6d8dd8d1282931d93ec4132e2393418594d247514b83b3
+    511702e47fe0ca75c03df0c1bc98be018c5b2c1ebcbfa93d1da138ed588723da
+    97556f5a4401e72541ddb5f8cd73c91fc94f290c313a9bc0d5cac32799e574ca
+    Total reclaimed space: 1.74kB
+
+
+
+
+
+
+
+
+
