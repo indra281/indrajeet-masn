@@ -58,7 +58,7 @@ then
 
 elif [[ "$var1" == "DESTROY" ]]
 then
-	  docker container prune -f
+   docker container prune -f
 fi
 
 
